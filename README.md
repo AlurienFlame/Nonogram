@@ -19,7 +19,7 @@ Use `right click` to mark cells in green. This has no effect on gameplay, but ca
 The numbers along the side and top of the game indicate how many objectives are adjacent to each other in a column or row. Dashes indicate gaps of any length between groups of objectives.
 
 For example, a row labled `3-1` in a five cell wide board would indicate the following pattern:
-☻☻☻☺☻
+( )( )( ){ }( )
 
 ##### Summary
 * Objectives - Find all of these.
