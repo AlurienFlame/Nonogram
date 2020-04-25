@@ -1,8 +1,8 @@
 // TODO: Difficulty options
 // TODO: Sound
 // TODO: Distinguish shapes as well as colors (sorry color blind people!)
-const gridWidth = 3;
-const gridHeight = 3;
+const gridWidth = 9;
+const gridHeight = 9;
 const cellSize = 50;
 const grid = make2DGrid();
 const maxStrikes = 3;
