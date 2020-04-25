@@ -53,7 +53,7 @@ class Cell {
                 }
             });
             if (won) {
-                win()
+                setTimeout(win, 100);
             }
         } else if (!this.isIncorrect) {
             this.isIncorrect = true;

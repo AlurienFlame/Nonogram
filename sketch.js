@@ -1,6 +1,8 @@
 // TODO: Difficulty options
-const gridWidth = 9;
-const gridHeight = 11;
+// TODO: Sound
+// TODO: README.md
+const gridWidth = 3;
+const gridHeight = 3;
 const cellSize = 50;
 const grid = make2DGrid();
 const maxStrikes = 3;
@@ -73,7 +75,7 @@ function collapseArray(cellArr) {
 function strike() {
     strikes++;
     if (strikes >= maxStrikes) {
-        lose();
+        setTimeout(lose, 100);
     }
 }
 
