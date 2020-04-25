@@ -1,5 +1,8 @@
 # Nonogram
 
+Play here:
+https://alurienflame-nonogram.glitch.me/
+
 #### Win Condition
 
 Win by using `left click` to select every cell containing a hidden blue objective.
