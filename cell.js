@@ -35,21 +35,29 @@ class Cell {
             fill("green");
             ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
         } else {
-            // Debug code to show objectives
-            if (this.isObjective) {
-                fill("gold");
-                ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
-            }
+            // Debug code to show objectives; Uncommenting this is cheating!
+            // if (this.isObjective) {
+            //     fill("gold");
+            //     ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
+            // }
         }
     }
 
     onLeftClick() {
         if (this.isObjective) {
-            // If correct, flag as correct and check for victory
             this.isCorrect = true;
-        } else {
-            // If incorrect, flag as incorrect and check for loss
+            let won = true;
+            loopGrid((x, y) => {
+                if (grid[x][y].isObjective && !grid[x][y].isCorrect) {
+                    won = false;
+                }
+            });
+            if (won) {
+                win()
+            }
+        } else if (!this.isIncorrect) {
             this.isIncorrect = true;
+            strike();
         }
     }
 

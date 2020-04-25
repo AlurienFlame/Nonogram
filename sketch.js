@@ -3,29 +3,46 @@ const gridWidth = 9;
 const gridHeight = 11;
 const cellSize = 50;
 const grid = make2DGrid();
-let points = 0;
+const maxStrikes = 3;
+let strikes = 0;
+let gameIsOver = false;
 
 function setup() {
     createCanvas((gridWidth + 1) * cellSize, (gridHeight + 1) * cellSize);
     loopGrid((x, y) => {
         grid[x][y] = new Cell(x, y, cellSize);
     });
+
+    topNums = grid.map((col) => [collapseArray(col), col[0].xPx]);
+
+    sideNums = [];
+    for (let i = 0; i < gridHeight; i++) {
+        row = grid.map((col) => col[i]);
+        sideNums.push([collapseArray(row), row[0].yPx]);
+    }
 }
 
 function draw() {
     background(125);
 
-    for (col of grid) {
-        collapsedArr = collapseColumn(col)
+    translate(cellSize, cellSize);
+
+    fill("black");
+    textSize(14);
+    for (num of topNums) {
+        text(num[0], num[1], -5);
     }
 
-    translate(cellSize, cellSize);
+    for (num of sideNums) {
+        text(num[0], 5 - cellSize, num[1] + cellSize / 2);
+    }
+
     loopGrid((x, y) => {
         grid[x][y].show();
     });
 }
 
-function mouseReleased(event) {
+function mouseReleased() {
     let clickedOn = grid[floor((mouseX - cellSize) / cellSize)][floor((mouseY - cellSize) / cellSize)];
 
     if (mouseButton === LEFT) {
@@ -37,26 +54,27 @@ function mouseReleased(event) {
     }
 }
 
-// FIXME: For some reason ignoring the last few cells in column
-function collapseColumn(col) {
-    let result = []
+function collapseArray(cellArr) {
+    let arr = cellArr.map((i) => i.isObjective);
+    let result = [];
     let localSum = 0;
-    for (i of col.map(i => i.isObjective)) {
-        if (i) {
-            localSum += i;
-        } else {
-            result += localSum
-            localSum = 0
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i]) {
+            localSum++;
+            if (!arr[i + 1]) {
+                result.push(localSum);
+                localSum = 0;
+            }
         }
     }
-    return result;
+    return result.join("-");
 }
 
-function deductPoint() {
-    points--;
-    console.log(`Points reduced to ${points}`);
-
-    // If points < maxPoints: you lose
+function strike() {
+    strikes++;
+    if (strikes >= maxStrikes) {
+        lose();
+    }
 }
 
 function make2DGrid() {
@@ -73,6 +91,27 @@ function loopGrid(callback) {
             callback(i, j);
         }
     }
+}
+
+function win() {
+    if (confirm("You win! Play again?")) {
+        location.reload();
+    }
+}
+
+function lose() {
+    if (confirm(`You lose! You missed an objective ${maxStrikes} times. Play again?`)) {
+        location.reload();
+    }
+    location.reload();
+}
+
+function cheat() {
+    loopGrid((x, y) => {
+        if (grid[x][y].isObjective) {
+            grid[x][y].isCorrect = true;
+        }
+    });
 }
 
 document.addEventListener("contextmenu", (event) => event.preventDefault());
