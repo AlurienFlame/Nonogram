@@ -1,6 +1,6 @@
 // TODO: Difficulty options
 // TODO: Sound
-// TODO: README.md
+// TODO: Distinguish shapes as well as colors (sorry color blind people!)
 const gridWidth = 3;
 const gridHeight = 3;
 const cellSize = 50;
