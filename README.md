@@ -29,6 +29,6 @@ For example, a row labled `3-1` in a five cell wide board would indicate the fol
 
 #### Planned Features
 
-* Colorblind mode
-* Sound effects
-* Customizable difficulty
+- [ ] Colorblind mode
+- [ ] Sound effects
+- [ ] Customizable difficulty
