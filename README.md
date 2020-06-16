@@ -1,7 +1,7 @@
 # Nonogram
 
-Play here:
-https://alurienflame-nonogram.glitch.me/
+[Play Here](https://alurienflame-nonogram.glitch.me/)
+[Github](https://github.com/AlurienFlame/Nonogram)
 
 #### Win Condition
 
