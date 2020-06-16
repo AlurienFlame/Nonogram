@@ -67,14 +67,12 @@ function mouseReleased() {
 function getClickedCell() {
     // Don't click outside of game
     if (mouseX > centerTranslation + cellSize + gridWidth * cellSize || mouseX < centerTranslation + cellSize) return;
-    if (mouseY > gridHeight * cellSize || mouseY < cellSize) return;
+    if (mouseY > (gridHeight + 1) * cellSize || mouseY < cellSize) return;
 
     // Don't click if game is over
     if (gameIsOver) return;
 
     // Calculate which cell was clicked on from mouse co-ordinates
-    let x = floor((mouseX - (centerTranslation + cellSize)) / cellSize);
-    console.log(x);
     return grid[floor((mouseX - (centerTranslation + cellSize)) / cellSize)][floor((mouseY - cellSize) / cellSize)];
 }
 
