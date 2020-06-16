@@ -13,6 +13,7 @@ class Cell {
     }
 
     show() {
+        // Cells differ slightly in color so that lines are clearer
         if (this.x % 2 == 1 && this.y % 2 == 1) {
             // x and y odd: darkest
             fill(170);
@@ -35,7 +36,7 @@ class Cell {
             fill("green");
             ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
         } else {
-            // Debug code to show objectives; Uncommenting this is cheating!
+            // Debug code to show objectives - Uncommenting this is cheating!
             // if (this.isObjective) {
             //     fill("gold");
             //     ellipse(this.xPx + this.r, this.yPx + this.r, this.r);

@@ -1,34 +1,41 @@
-// TODO: Difficulty options
-// TODO: Sound
 // TODO: Distinguish shapes as well as colors (sorry color blind people!)
-const gridWidth = 9;
-const gridHeight = 9;
+const gridWidth = 11;
+const gridHeight = 11;
 const cellSize = 50;
 const grid = make2DGrid();
 const maxStrikes = 3;
 let strikes = 0;
+let centerTranslation;
 let gameIsOver = false;
 
 function setup() {
-    createCanvas((gridWidth + 1) * cellSize, (gridHeight + 1) * cellSize);
+    createCanvas(800, 600);
     loopGrid((x, y) => {
         grid[x][y] = new Cell(x, y, cellSize);
     });
 
-    topNums = grid.map((col) => [collapseArray(col), col[0].xPx]);
+    topNums = grid.map((col) => [formatArray(col), col[0].xPx]);
 
     sideNums = [];
     for (let i = 0; i < gridHeight; i++) {
         row = grid.map((col) => col[i]);
-        sideNums.push([collapseArray(row), row[0].yPx]);
+        sideNums.push([formatArray(row), row[0].yPx]);
     }
+
+    // Calculate how many pixels we need to translate
+    // to center horizontally
+    centerTranslation = (width - (gridWidth + 1) * cellSize) / 2;
 }
 
 function draw() {
     background(125);
 
+    // Center
+    translate(centerTranslation, 0);
+    // Make space for numbers
     translate(cellSize, cellSize);
 
+    // TODO: Arrange numbers better
     fill("black");
     textSize(14);
     for (num of topNums) {
@@ -45,7 +52,8 @@ function draw() {
 }
 
 function mouseReleased() {
-    let clickedOn = grid[floor((mouseX - cellSize) / cellSize)][floor((mouseY - cellSize) / cellSize)];
+    let clickedOn = getClickedCell();
+    if (!clickedOn) return;
 
     if (mouseButton === LEFT) {
         clickedOn.onLeftClick();
@@ -56,7 +64,21 @@ function mouseReleased() {
     }
 }
 
-function collapseArray(cellArr) {
+function getClickedCell() {
+    // Don't click outside of game
+    if (mouseX > centerTranslation + cellSize + gridWidth * cellSize || mouseX < centerTranslation + cellSize) return;
+    if (mouseY > gridHeight * cellSize || mouseY < cellSize) return;
+
+    // Don't click if game is over
+    if (gameIsOver) return;
+
+    // Calculate which cell was clicked on from mouse co-ordinates
+    let x = floor((mouseX - (centerTranslation + cellSize)) / cellSize);
+    console.log(x);
+    return grid[floor((mouseX - (centerTranslation + cellSize)) / cellSize)][floor((mouseY - cellSize) / cellSize)];
+}
+
+function formatArray(cellArr) {
     let arr = cellArr.map((i) => i.isObjective);
     let result = [];
     let localSum = 0;
@@ -102,10 +124,10 @@ function win() {
 }
 
 function lose() {
+    gameIsOver = true;
     if (confirm(`You lose! You missed an objective ${maxStrikes} times. Play again?`)) {
         location.reload();
     }
-    location.reload();
 }
 
 function cheat() {
