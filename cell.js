@@ -27,26 +27,32 @@ class Cell {
         rect(this.xPx, this.yPx, this.d, this.d);
 
         if (this.isCorrect) {
+            // Left clicked - discovered target - blue circle
+            noStroke();
             fill("blue");
             ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
         } else if (this.isIncorrect) {
-            fill("red");
-            ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
+            // Left clicked - missed target - red exclamation point
+            stroke("red");
+            strokeWeight(8);
+            line(this.xPx + this.d * 0.5, this.yPx + this.d * 0.2, this.xPx + this.d * 0.5, this.yPx + this.d * 0.6);
+            line(this.xPx + this.d * 0.5, this.yPx + this.d * 0.8, this.xPx + this.d * 0.5, this.yPx + this.d * 0.8);
         } else if (this.isCrossed) {
-            fill("green");
-            ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
-        } else {
-            // Debug code to show objectives - Uncommenting this is cheating!
-            // if (this.isObjective) {
-            //     fill("gold");
-            //     ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
-            // }
+            // Right clicked - marked tile as clear - green cross
+            stroke("green");
+            strokeWeight(8);
+            // ellipse(this.xPx + this.r, this.yPx + this.r, this.r);
+            line(this.xPx + this.d * 0.25, this.yPx + this.d * 0.25, this.xPx + this.d * 0.75, this.yPx + this.d * 0.75);
+            line(this.xPx + this.d * 0.75, this.yPx + this.d * 0.25, this.xPx + this.d * 0.25, this.yPx + this.d * 0.75);
         }
+        stroke("black");
+        strokeWeight(1);
     }
 
     onLeftClick() {
         if (this.isObjective) {
             this.isCorrect = true;
+            // Check for victory
             let won = true;
             loopGrid((x, y) => {
                 if (grid[x][y].isObjective && !grid[x][y].isCorrect) {
@@ -63,6 +69,6 @@ class Cell {
     }
 
     onRightClick() {
-        this.isCrossed = true;
+        this.isCrossed = !this.isCrossed;
     }
 }

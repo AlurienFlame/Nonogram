@@ -1,4 +1,3 @@
-// TODO: Distinguish shapes as well as colors (sorry color blind people!)
 const gridWidth = 11;
 const gridHeight = 11;
 const cellSize = 50;
@@ -38,6 +37,7 @@ function draw() {
     // TODO: Arrange numbers better
     fill("black");
     textSize(14);
+    noStroke();
     for (num of topNums) {
         text(num[0], num[1], -5);
     }
@@ -45,6 +45,7 @@ function draw() {
     for (num of sideNums) {
         text(num[0], 5 - cellSize, num[1] + cellSize / 2);
     }
+    stroke("black");
 
     loopGrid((x, y) => {
         grid[x][y].show();
@@ -126,14 +127,6 @@ function lose() {
     if (confirm(`You lose! You missed an objective ${maxStrikes} times. Play again?`)) {
         location.reload();
     }
-}
-
-function cheat() {
-    loopGrid((x, y) => {
-        if (grid[x][y].isObjective) {
-            grid[x][y].isCorrect = true;
-        }
-    });
 }
 
 document.addEventListener("contextmenu", (event) => event.preventDefault());
