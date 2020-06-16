@@ -3,7 +3,7 @@ class Cell {
     isIncorrect = false;
     isCrossed = false;
     constructor(x, y, d) {
-        this.isObjective = floor(random(2));
+        this.isObjective = random(1) < objectiveFrequency;
         this.x = x;
         this.y = y;
         this.d = d;

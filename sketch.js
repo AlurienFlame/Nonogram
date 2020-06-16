@@ -1,3 +1,4 @@
+const objectiveFrequency = 0.6; // Chance that any given cell will be an objective
 const gridWidth = 11;
 const gridHeight = 11;
 const cellSize = 50;
